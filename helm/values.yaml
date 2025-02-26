@@ -1,0 +1,16 @@
+helloJava:
+  name: hello-java
+  image:
+    repository: tsrana1/spring-boot-hello-world
+    tag: latest
+    pullPolicy: IfNotPresent
+  tag: latest
+  pullPolicy: IfNotPresent
+  service:
+    type: NodePort
+    port: 8080
+    nodePort: 32000
+  replicas:
+    min: 1
+    max: 10
+  cpuUtilization: 50
