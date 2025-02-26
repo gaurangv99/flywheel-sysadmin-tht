@@ -1,9 +1,3 @@
 # Three Tier Application using terraform
 
-Application is deployed using terraform apply and destoy commands 
-
-## Outputs
-
-![Put data](<put record.png>)
-
-![Get data](<get all .png>)
+![Three Tier Architecture](<3 tier architecture.png>)
