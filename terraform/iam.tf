@@ -71,16 +71,6 @@ resource "aws_iam_role_policy" "ecr_pull_policy" {
       {
         Effect = "Allow"
         Action = [
-          "ecr:GetAuthorizationToken",
-          "ecr:BatchCheckLayerAvailability",
-          "ecr:GetDownloadUrlForLayer",
-          "ecr:BatchGetImage"
-        ]
-        Resource = "*"
-      },
-      {
-        Effect = "Allow"
-        Action = [
           "ecr:BatchGetImage",
           "ecr:GetDownloadUrlForLayer",
           "ecr:BatchCheckLayerAvailability"
