@@ -24,6 +24,14 @@ spec:
               port: {{ .Values.helloJava.service.port }}
             initialDelaySeconds: 20
             periodSeconds: 30
+          resources:
+      limits:
+        cpu: {{ .Values.helloJava.resources.limits.cpu }}
+        memory: {{ .Values.helloJava.resources.limits.memory }}
+      requests:
+        cpu: {{ .Values.helloJava.resources.requests.cpu }}
+        memory: {{ .Values.helloJava.resources.requests.cpu }}
+      
 ---
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
@@ -44,3 +52,4 @@ spec:
         target:
           type: Utilization
           averageUtilization: {{ .Values.helloJava.cpuUtilization }}
+  

@@ -8,7 +8,7 @@ spec:
     - port: {{ .Values.helloJava.service.port }}
       targetPort: {{ .Values.helloJava.service.port }}
       protocol: TCP
-      name: order-api
+      name: {{ .Values.helloJava.name }}
       {{- if eq .Values.helloJava.service.type "NodePort" }}
       nodePort: {{ .Values.helloJava.service.nodePort }}
       {{- end }}

@@ -14,3 +14,10 @@ helloJava:
     min: 1
     max: 10
   cpuUtilization: 50
+  resources:
+    requests:
+      cpu: "0.5"
+      memory: "50Mi"
+    limits:
+      cpu: "0.5"
+      memory: "100Mi"
