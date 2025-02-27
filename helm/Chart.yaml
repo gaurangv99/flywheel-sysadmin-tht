@@ -1,0 +1,5 @@
+apiVersion: v2
+name: flywheel-tht
+description: A Helm chart for deploying simple java application on Minikube
+version: 0.1.0
+type: application

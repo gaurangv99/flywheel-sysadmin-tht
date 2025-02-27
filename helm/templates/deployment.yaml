@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.helloJava.name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.helloJava.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.helloJava.name }}
+    spec:
+      containers:
+        - name: {{ .Values.helloJava.name }}
+          image: "{{ .Values.helloJava.image.repository }}:{{ .Values.helloJava.image.tag }}"
+          imagePullPolicy: "{{ .Values.helloJava.image.pullPolicy }}"
+          ports:
+            - containerPort: {{ .Values.helloJava.service.port }}
+          livenessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.helloJava.service.port }}
+            initialDelaySeconds: 20
+            periodSeconds: 30
+          resources:
+      limits:
+        cpu: {{ .Values.helloJava.resources.limits.cpu }}
+        memory: {{ .Values.helloJava.resources.limits.memory }}
+      requests:
+        cpu: {{ .Values.helloJava.resources.requests.cpu }}
+        memory: {{ .Values.helloJava.resources.requests.cpu }}
+      
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ .Values.helloJava.name }}
+  namespace: default
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ .Values.helloJava.name }}
+  minReplicas: {{ .Values.helloJava.replicas.min }}
+  maxReplicas: {{ .Values.helloJava.replicas.max }}
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.helloJava.cpuUtilization }}
+  
