@@ -10,7 +10,12 @@ FROM python:3.12-slim
 WORKDIR /app
 
 COPY --from=builder /install /usr/local
+
 COPY . /app
+
+RUN chown -R appuser:appuser /app
+
+USER appuser
 
 EXPOSE 5001
 
