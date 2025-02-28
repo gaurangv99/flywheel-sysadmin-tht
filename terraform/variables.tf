@@ -64,3 +64,51 @@ variable "vpc_name" {
   description = "VPC Name"
   type        = string
 }
+
+variable "container_port" {
+  description = "Container port for traffic"
+  type        = number
+  default     = 5001
+}
+
+variable "postgres_allocated_storage" {
+  description = "Allocated storage for postgres DB"
+  type        = number
+  default     = 20
+}
+
+variable "postgres_backup_window" {
+  description = "Bakup window for postgres DB"
+  type        = string
+  default     = "07:00-09:00"
+}
+
+variable "postgres_backup_retention_period" {
+  description = "Number of days backup has to be retained"
+  type        = number
+  default     = 5
+}
+
+variable "ecs_min_asg_count" {
+  description = "Min capacity for asg scaling"
+  type        = number
+  default     = 1
+}
+
+variable "ecs_max_asg_count" {
+  description = "Max capacity for asg scaling"
+  type        = number
+  default     = 6
+}
+
+variable "ecs_cpu" {
+  description = "CPU units for ecs tasks"
+  type        = number
+  default     = 256
+}
+
+variable "ecs_memory" {
+  description = "Memory for ecs tasks"
+  type        = number
+  default     = 512
+}

@@ -22,7 +22,7 @@ resource "aws_lb_target_group" "employee_registry" {
     interval            = 10
     path                = "/"
     matcher             = "200"
-    port                = 5001
+    port                = var.container_port
   }
 }
 

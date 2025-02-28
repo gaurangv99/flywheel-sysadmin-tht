@@ -39,12 +39,12 @@ resource "aws_db_instance" "postgresql" {
   identifier              = "employee-registry-postgresql"
   engine                  = "postgres"
   instance_class          = var.db_instance_class
-  allocated_storage       = 20
+  allocated_storage       = var.postgres_allocated_storage
   db_name                 = jsondecode(aws_secretsmanager_secret_version.employee_registry.secret_string).db_name
   username                = jsondecode(aws_secretsmanager_secret_version.employee_registry.secret_string).username
   password                = jsondecode(aws_secretsmanager_secret_version.employee_registry.secret_string).password
-  backup_retention_period = 5
-  backup_window           = "07:00-09:00"
+  backup_retention_period = var.backup_retention_period
+  backup_window           = var.postgres_backup_window
   storage_encrypted       = true
   deletion_protection     = true
   vpc_security_group_ids  = [aws_security_group.rds.id]

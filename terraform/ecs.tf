@@ -11,8 +11,8 @@ resource "aws_ecs_cluster" "main" {
 resource "aws_ecs_task_definition" "employee_registry" {
   family             = "${var.environment}-employee-registry"
   network_mode       = "awsvpc"
-  cpu                = 256
-  memory             = 512
+  cpu                = var.ecs_cpu
+  memory             = var.ecs_memory
   execution_role_arn = aws_iam_role.ecs_execution_role.arn
   task_role_arn      = aws_iam_role.ecs_task_role.arn
 
@@ -21,7 +21,7 @@ resource "aws_ecs_task_definition" "employee_registry" {
     image = var.employee_registry_image
     portMappings = [
       {
-        containerPort = 5001
+        containerPort = var.container_port
         protocol      = "tcp"
         name          = "http"
       }
@@ -67,7 +67,7 @@ resource "aws_ecs_service" "employee_registry" {
   load_balancer {
     target_group_arn = aws_lb_target_group.employee_registry.arn
     container_name   = "employee-registry"
-    container_port   = 5001
+    container_port   = var.container_port
   }
 
   network_configuration {
@@ -88,8 +88,8 @@ resource "aws_appautoscaling_target" "target" {
   service_namespace  = "ecs"
   resource_id        = "service/${aws_ecs_cluster.main.name}/${aws_ecs_service.employee_registry.name}"
   scalable_dimension = "ecs:service:DesiredCount"
-  min_capacity       = 1
-  max_capacity       = 6
+  min_capacity       = var.ecs_min_asg_count
+  max_capacity       = var.ecs_max_asg_count
 }
 
 resource "aws_appautoscaling_policy" "up" {
