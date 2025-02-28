@@ -103,9 +103,13 @@ resource "aws_appautoscaling_policy" "up" {
     cooldown                = 60
     metric_aggregation_type = "Maximum"
 
-    step_adjustment {
-      metric_interval_lower_bound = 0
-      scaling_adjustment          = 1
+    dynamic "step_adjustment" {
+      for_each = var.ecs_scale_up_steps
+      content {
+        metric_interval_upper_bound = step_adjustment.value.upper_bound
+        metric_interval_lower_bound = step_adjustment.value.lower_bound
+        scaling_adjustment          = step_adjustment.value.adjustment
+      }
     }
   }
 }
@@ -121,9 +125,13 @@ resource "aws_appautoscaling_policy" "down" {
     cooldown                = 60
     metric_aggregation_type = "Maximum"
 
-    step_adjustment {
-      metric_interval_upper_bound = 0
-      scaling_adjustment          = -1
+    dynamic "step_adjustment" {
+      for_each = var.ecs_scale_down_steps
+      content {
+        metric_interval_upper_bound = step_adjustment.value.upper_bound
+        metric_interval_lower_bound = step_adjustment.value.lower_bound
+        scaling_adjustment          = step_adjustment.value.adjustment
+      }
     }
   }
 }

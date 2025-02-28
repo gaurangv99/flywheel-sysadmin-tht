@@ -43,7 +43,7 @@ resource "aws_db_instance" "postgresql" {
   db_name                 = jsondecode(aws_secretsmanager_secret_version.employee_registry.secret_string).db_name
   username                = jsondecode(aws_secretsmanager_secret_version.employee_registry.secret_string).username
   password                = jsondecode(aws_secretsmanager_secret_version.employee_registry.secret_string).password
-  backup_retention_period = var.backup_retention_period
+  backup_retention_period = var.postgres_backup_retention_period
   backup_window           = var.postgres_backup_window
   storage_encrypted       = true
   deletion_protection     = true

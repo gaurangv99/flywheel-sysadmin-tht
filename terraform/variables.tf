@@ -112,3 +112,33 @@ variable "ecs_memory" {
   type        = number
   default     = 512
 }
+
+variable "ecs_scale_down_steps" {
+  type = list(object({
+    upper_bound = number
+    lower_bound = number
+    adjustment  = number
+  }))
+  default = [
+    { upper_bound = 0, lower_bound = -5, adjustment = -1 },
+    { upper_bound = -5, lower_bound = -10, adjustment = -2 }
+  ]
+}
+
+variable "ecs_scale_up_steps" {
+  type = list(object({
+    upper_bound = number
+    lower_bound = number
+    adjustment  = number
+  }))
+  default = [
+    { upper_bound = 5, lower_bound = 0, adjustment = 1 },
+    { upper_bound = 10, lower_bound = 5, adjustment = 2 }
+  ]
+}
+
+variable "alb_health_check_path"{
+  description = "Bakup window for postgres DB"
+  type        = string
+  default     = "/"
+}

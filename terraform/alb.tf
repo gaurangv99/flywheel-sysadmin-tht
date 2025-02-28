@@ -20,7 +20,7 @@ resource "aws_lb_target_group" "employee_registry" {
     unhealthy_threshold = 10
     timeout             = 5
     interval            = 10
-    path                = "/"
+    path                = var.alb_health_check_path
     matcher             = "200"
     port                = var.container_port
   }
