@@ -16,10 +16,10 @@ resource "aws_lb_target_group" "employee_registry" {
   target_type = "ip"
 
   health_check {
-    healthy_threshold   = 2
-    unhealthy_threshold = 10
-    timeout             = 5
-    interval            = 10
+    healthy_threshold   = var.alb_healthy_threshold
+    unhealthy_threshold = var.alb_unhealthy_threshold
+    timeout             = var.alb_healthcheck_timeout
+    interval            = var.alb_healthcheck_interval
     path                = var.alb_health_check_path
     matcher             = "200"
     port                = var.container_port

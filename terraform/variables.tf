@@ -137,8 +137,32 @@ variable "ecs_scale_up_steps" {
   ]
 }
 
-variable "alb_health_check_path"{
-  description = "Bakup window for postgres DB"
+variable "alb_health_check_path" {
+  description = "ALB healthcheck path"
   type        = string
   default     = "/"
+}
+
+variable "alb_healthcheck_interval" {
+  description = "Alb healthcheck interval"
+  type        = number
+  default     = 10
+}
+
+variable "alb_healthcheck_timeout" {
+  description = "Alb healthcheck timeout"
+  type        = number
+  default     = 5
+}
+
+variable "alb_healthy_threshold" {
+  description = "Alb healthy threshold"
+  type        = number
+  default     = 2
+}
+
+variable "alb_unhealthy_threshold" {
+  description = "Alb unhealthy threshold"
+  type        = number
+  default     = 10
 }
